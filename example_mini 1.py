@@ -4,23 +4,19 @@ from firedrake import *
 import math
 import matplotlib.pyplot as plt
 
-print("=== Step 1: Set up mesh and function spaces ===")
 mesh = UnitSquareMesh(40, 40, quadrilateral=True)
 V = FunctionSpace(mesh, "DQ", 1)  
 W = VectorFunctionSpace(mesh, "CG", 1)  
 
-print("=== Step 2: Set up velocity field (solid body rotation) ===")
 x, y = SpatialCoordinate(mesh)
 velocity = as_vector((0.5 - y, x - 0.5))
 u = Function(W).interpolate(velocity)
 
-print("=== Step 3: Time parameters ===")
 T = 2*math.pi  
 dt = T/600.0   
 dtc = Constant(dt)
 q_in = Constant(1.0)  
 
-print("=== Step 4: Set up DG formulation ===")
 phi = TestFunction(V)
 dq_trial = TrialFunction(V)
 a = phi * dq_trial * dx  
@@ -60,7 +56,6 @@ def create_true_q0():
 q_true = create_true_q0()
 print(f"Created q_true with range: [{q_true.dat.data.min():.3f}, {q_true.dat.data.max():.3f}]")
 
-print("=== Step 6: Create background field q_b ===")
 def create_background():
     # get q_b
     bell_r0 = 0.12; bell_x0 = 0.3; bell_y0 = 0.6
