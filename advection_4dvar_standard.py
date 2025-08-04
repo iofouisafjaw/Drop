@@ -3,7 +3,7 @@ from firedrake_adjoint import *
 import numpy as np
 
 # 设置参数
-nx = 50   # 空间网格数
+nx = 40   # 空间网格数
 nt = 20   # 时间步数
 L = 1.0   # 空间长度
 T = 0.3   # 总时间

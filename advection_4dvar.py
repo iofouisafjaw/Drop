@@ -680,7 +680,7 @@ if __name__ == "__main__":
         simple_solutions = simple_test()
     except Exception as e:
         print(f"Simple test failed: {e}")
-        
+        pass
     
     # Resume annotation for 4D-Var
     continue_annotation()
