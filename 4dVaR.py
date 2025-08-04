@@ -131,7 +131,7 @@ def cb(qval):
     print("J =", J_now)
     J_vals.append(J_now)
 
-opt_q0 = minimize(rf, method="L-BFGS-B", options={"disp": True, "maxiter": 20}, callback=cb)
+opt_q0 = minimize(rf, method="L-BFGS-B", options={"disp": True, "maxiter": 20}, derivative_options={'riesz_representation':'l2'})
 
 from firedrake import assemble, sqrt, dx
 
