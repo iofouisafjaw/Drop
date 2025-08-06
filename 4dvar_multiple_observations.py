@@ -124,11 +124,11 @@ continue_annotation()
 
 alpha = Constant(1e-3)
 #background term
-J = assemble((q0 - qb)**2 * dx)
+J = assemble(alpha * (q0 - qb)**2 * dx)
 # Observation term 
 J = J + (assemble((H(solve_rk(q0, return_series=False)) - y_obs)**2 * dx))
 # Additional regularization 
-J = J + assemble(alpha * (q0 - qb)**2 * dx)
+# J = J + assemble(alpha * (q0 - qb)**2 * dx)
 
 rf = ReducedFunctional(J, Control(q0))
 
@@ -146,9 +146,6 @@ err_opt = errornorm(opt_q0, q_true_init)
 print("‖qb - q_true‖ₗ₂ =", err_prior)
 print("‖opt_q0 - q_true‖ₗ₂ =", err_opt)
 print(err_opt / err_prior)
-
-print(f"\nVertexOnlyMesh Analysis:")
-print(f"Number of observation points: {len(observation_points)}")
 
 y_true = H(q_obs_end)
 y_prior = H(solve_rk(qb, return_series=False))
