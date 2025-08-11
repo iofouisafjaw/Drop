@@ -129,7 +129,7 @@ J = assemble(alpha * (q0 - qb)**2 * dx)
 J = J + (assemble((H(solve_rk(q0, return_series=False)) - y_obs)**2 * dx))
 # Additional regularization 
 # J = J + assemble(alpha * (q0 - qb)**2 * dx)
-
+print(type(J))
 rf = ReducedFunctional(J, Control(q0))
 
 pause_annotation()

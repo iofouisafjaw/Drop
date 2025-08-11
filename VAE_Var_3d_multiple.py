@@ -62,7 +62,7 @@ class VAE(nn.Module):
         # output layer
         decoder_layers.extend([
             nn.Linear(prev_dim, input_dim),
-            #nn.Tanh()  
+            nn.Tanh()  
         ])
         
         self.decoder = nn.Sequential(*decoder_layers)

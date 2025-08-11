@@ -118,7 +118,6 @@ class VAE(nn.Module):
     
         jtj = torch.matmul(jacobian.t(), jacobian)
         jtj_reg = jtj + eps * torch.eye(jtj.shape[0], device=jtj.device)
-        # Cholesky分解更稳定
         L = torch.linalg.cholesky(jtj_reg)
         log_det = torch.sum(torch.log(torch.diag(L)))
         return log_det
@@ -226,7 +225,7 @@ def train_vae(vae, training_data, num_epochs=200, batch_size=64,
 
             recon_batch, mu, logvar, z = vae(data)
 
-            beta = min(1.0, (epoch + 1) / 50)  # 前50个epoch逐渐增加β，防止not learning useful features
+            beta = min(1.0, (epoch + 1) / 100)  # 前50个epoch逐渐增加β，防止not learning useful features
             loss, recon_loss, kl_loss = vae_loss_function(
                 recon_batch, data, mu, logvar, beta=beta, sigma=1.0
             )
@@ -458,7 +457,7 @@ if __name__ == "__main__":
              conditional(And(And(x > slot_left, x < slot_right), y < slot_top),
                0.0, 1.0), 0.0)
     q_true_init = Function(V, name="q_true_init").interpolate(1.0 + bell)
-    #q_true_init = Function(V, name="q_true_init").interpolate(1.0 + 0.5*bell + 0.3*cone + 0.4*slot_cyl))
+    #q_true_init = Function(V, name="q_true_init").interpolate(1.0 + 0.5*bell + 0.3*cone + 0.4*slot_cyl)
     qb = Function(V, name="qb")
     qb.assign(q_true_init + 0.1 * Function(V).interpolate(sin(2 * math.pi * x) * sin(2 * math.pi * y)))
     
